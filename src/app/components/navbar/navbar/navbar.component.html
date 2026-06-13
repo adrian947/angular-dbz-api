@@ -1,0 +1,47 @@
+<nav class="dbz-nav">
+  <!-- Brand -->
+  <a routerLink="/" class="brand" (click)="closeMobile()">
+    <span class="brand-ball">7</span>
+    <span class="brand-text">DRAGON <span class="accent">BALL</span></span>
+  </a>
+
+  <!-- Desktop links -->
+  <ul class="nav-links">
+    @for (item of items; track item.link) {
+    <li>
+      <a
+        [routerLink]="item.link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+      >
+        <span class="nav-icon">{{ item.icon }}</span>
+        {{ item.label }}
+      </a>
+    </li>
+    }
+  </ul>
+
+  <!-- Mobile toggle -->
+  <button class="burger" (click)="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+@if (mobileOpen()) {
+<ul class="nav-links-mobile">
+  @for (item of items; track item.link) {
+  <li>
+    <a
+      [routerLink]="item.link"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+      (click)="closeMobile()"
+    >
+      <span class="nav-icon">{{ item.icon }}</span>
+      {{ item.label }}
+    </a>
+  </li>
+  }
+</ul>
+}

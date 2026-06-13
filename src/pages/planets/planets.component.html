@@ -1,0 +1,36 @@
+<header class="page-head">
+  <h1 class="section-title">PLA<span>NETAS</span></h1>
+  <p class="page-sub">Los mundos que conforman el universo Dragon Ball</p>
+</header>
+
+@if (query.isLoading()) {
+<div class="loader-wrap">
+  <span class="dbz-spinner"></span>
+  <p>Rastreando planetas...</p>
+</div>
+} @else if (query.isError()) {
+<div class="state-msg">No pudimos cargar los planetas. Intenta de nuevo.</div>
+} @else {
+
+<div class="cards-grid">
+  @for (planet of query.data()?.items; track planet.id) {
+  <article class="planet-card">
+    <div class="planet-img">
+      <img [src]="planet.image" [alt]="planet.name" loading="lazy" />
+      <span
+        class="status-badge"
+        [class.destroyed]="planet.isDestroyed"
+      >
+        {{ planet.isDestroyed ? '💥 Destruido' : '🟢 Activo' }}
+      </span>
+    </div>
+
+    <div class="planet-body">
+      <h2 class="planet-name">{{ planet.name }}</h2>
+      <p class="planet-desc">{{ planet.description | slice : 0 : 160 }}…</p>
+    </div>
+  </article>
+  }
+</div>
+
+}

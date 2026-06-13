@@ -1,0 +1,50 @@
+<header class="page-head">
+  <h1 class="section-title">PER<span>SONAJES</span></h1>
+  <p class="page-sub">Los guerreros más poderosos del universo Dragon Ball</p>
+</header>
+
+@if (query.isPending()) {
+<div class="loader-wrap">
+  <span class="dbz-spinner"></span>
+  <p>Cargando guerreros...</p>
+</div>
+} @else if (query.isError()) {
+<div class="state-msg">No pudimos cargar los personajes. Intenta de nuevo.</div>
+} @else {
+
+<div class="cards-grid" [class.is-fetching]="query.isFetching()">
+  @for (character of query.data()?.items; track character.id) {
+  <article class="char-card" (click)="handleViewCharacterDetails(character.id)">
+    <div class="char-img">
+      <img [src]="character.image" [alt]="character.name" loading="lazy" />
+      <span class="char-race">{{ character.race }}</span>
+    </div>
+
+    <div class="char-body">
+      <h2 class="char-name">{{ character.name }}</h2>
+
+      <div class="char-meta">
+        <span class="chip">⚡ Ki: {{ character.ki }}</span>
+        <span class="chip ghost">{{ character.gender }}</span>
+      </div>
+
+      <p class="char-desc">{{ character.description | slice : 0 : 120 }}…</p>
+
+      <button class="btn-detail" (click)="$event.stopPropagation(); handleViewCharacterDetails(character.id)">
+        Ver detalles →
+      </button>
+    </div>
+  </article>
+  }
+</div>
+
+<div class="paginator-wrap">
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="first()"
+    [rows]="8"
+    [totalRecords]="query.data()?.meta?.totalItems ?? 0"
+  />
+</div>
+
+}

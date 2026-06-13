@@ -1,1 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* ===== Dragon Ball Theme Tokens ===== */
+@theme {
+  --color-dbz-orange: #ff7b00;
+  --color-dbz-orange-light: #ff9d3c;
+  --color-dbz-orange-dark: #e85d00;
+  --color-dbz-yellow: #ffc400;
+  --color-dbz-black: #0d0d0d;
+  --color-dbz-panel: #161616;
+  --color-dbz-panel-2: #1f1f1f;
+  --color-dbz-border: #2c2c2c;
+
+  --font-display: "Russo One", system-ui, sans-serif;
+  --font-body: "Roboto", system-ui, sans-serif;
+}
+
+/* ===== Base ===== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background-color: #0d0d0d;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(255, 123, 0, 0.12), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(255, 196, 0, 0.08), transparent 45%);
+  background-attachment: fixed;
+  color: #f5f5f5;
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+}
+
+/* ===== Custom scrollbar ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff7b00, #e85d00);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9d3c;
+}
+
+/* ===== Reusable helpers ===== */
+.text-glow {
+  text-shadow: 0 0 18px rgba(255, 123, 0, 0.55);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #fff;
+  text-transform: uppercase;
+}
+.section-title span {
+  color: var(--color-dbz-orange);
+}

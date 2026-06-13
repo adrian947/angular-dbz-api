@@ -1,0 +1,75 @@
+<a routerLink="/characters" [queryParams]="backQueryParams" class="back-link">← Volver a personajes</a>
+
+@if (query.isPending()) {
+<div class="loader-wrap">
+  <span class="dbz-spinner"></span>
+  <p>Cargando guerrero...</p>
+</div>
+} @else if (query.isError() || !query.data()) {
+<div class="state-msg">No se encontró este personaje.</div>
+} @else {
+
+@let c = query.data()!;
+
+<section class="hero">
+  <div class="hero-img">
+    <img [src]="c.image" [alt]="c.name" />
+  </div>
+
+  <div class="hero-info">
+    <span class="race-tag">{{ c.race }}</span>
+    <h1 class="hero-name">{{ c.name }}</h1>
+
+    <div class="tags">
+      <span class="chip">{{ c.gender }}</span>
+      @if (c.affiliation) {
+      <span class="chip">{{ c.affiliation }}</span>
+      }
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">Ki base</span>
+        <span class="stat-value">{{ c.ki || '—' }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Ki máximo</span>
+        <span class="stat-value highlight">{{ c.maxKi || '—' }}</span>
+      </div>
+    </div>
+
+    <p class="hero-desc">{{ c.description }}</p>
+  </div>
+</section>
+
+@if (c.originPlanet) {
+<section class="block">
+  <h2 class="block-title">🪐 Planeta de origen</h2>
+  <div class="origin-card">
+    <img [src]="c.originPlanet.image" [alt]="c.originPlanet.name" />
+    <div>
+      <h3>{{ c.originPlanet.name }}</h3>
+      <p>{{ c.originPlanet.description | slice : 0 : 220 }}…</p>
+    </div>
+  </div>
+</section>
+}
+
+@if (c.transformations.length) {
+<section class="block">
+  <h2 class="block-title">⚡ Transformaciones</h2>
+  <div class="trans-grid">
+    @for (t of c.transformations; track t.id) {
+    <article class="trans-card">
+      <div class="trans-img">
+        <img [src]="t.image" [alt]="t.name" loading="lazy" />
+      </div>
+      <h4>{{ t.name }}</h4>
+      <span class="trans-ki">⚡ {{ t.ki }}</span>
+    </article>
+    }
+  </div>
+</section>
+}
+
+}
